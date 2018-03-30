@@ -19,7 +19,7 @@
 <body>
     <div id="login-screen" class="full-screen container">
         <div class="row">
-            <div class="col s6 offset-s4">
+            <div class="col s6 offset-s5">
                 <h1 class="main-title">Login</h1>
             </div>
         </div>
@@ -35,14 +35,14 @@
                 <input type="text" id="input-password">
                 <label for="input-password">Password</label>
             </div>
-            <div class="input-field col s5 offset-s6">
+            <div class="input-field col s5 offset-s7">
                 <a class="waves-effect waves-light btn" id="btn-login">Login</a>
             </div>
         </div>
     </div>
     <div id="view-report-screen" class="full-screen container">
         <div class="row">
-            <div class="col s10 offset-s2">
+            <div class="col s7 offset-s3">
                 <h1 class="main-title">Report Submission</h1>
             </div>
         </div>
@@ -71,6 +71,26 @@
                 <a class="waves-effect waves-light btn" id="btn-submit">Submit</a>
             </div>
         </div>
+
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul>
+                <li>
+                    <a id="btn-upload" class="btn-floating green">
+                        <i class="material-icons">publish</i>
+                    </a>
+                </li>
+                <li>
+                    <a id="btn-logout" class="btn-floating blue">
+                        <i class="material-icons">exit_to_app</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
     </div>
 
     <script src="js/app.js"></script>
