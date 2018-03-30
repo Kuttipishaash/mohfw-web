@@ -11,8 +11,14 @@ body {
     z-index: 2;
 }
 
-#view-report-screen {
+#submit-report-screen {
     z-index: 1;
+}
+
+#btn-back {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
 }
 
 .full-screen {
@@ -39,4 +45,8 @@ body {
 
 .move-up {
     transform: translate(0, -100%);
+}
+
+.move-down {
+    transform: translate(0, 0);
 }

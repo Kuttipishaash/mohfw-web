@@ -9,6 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//db refs
 let dbReportsRef = firebase.database().ref().child('reports');
 let dbUserRef = firebase.database().ref().child('users');
 
@@ -18,6 +19,13 @@ let loginButton = document.querySelector('#btn-login');
 let usernameField = document.querySelector('#input-username');
 let passwordField = document.querySelector('#input-password');
 let loggedIn = false;
+
+//View Report screen
+let viewScreen = document.querySelector('#view-report-screen');
+let reportContainer = document.querySelector('#report-container');
+
+//usernameField.value = 'admin';
+//passwordField.value = '123';
 
 loginButton.addEventListener('click', function () {
     dbUserRef.on('child_added', snap => {
@@ -29,13 +37,14 @@ loginButton.addEventListener('click', function () {
                 });
                 loggedIn = true;
                 addClass(loginScreen, 'move-up');
+                removeClass(fab, 'hidden');
             }
         }
     });
 });
 
 //Report submission screen
-let viewScreen = document.querySelector('#view-report-screen');
+let submitScreen = document.querySelector('#submit-report-screen');
 let submitButton = document.querySelector('#btn-submit');
 let titleField = document.querySelector('#input-title')
 let programNameField = document.querySelector('#input-program-name');
@@ -58,9 +67,21 @@ submitButton.addEventListener('click', function () {
     }
 });
 
+//fab
+let fab = document.querySelector('.fixed-action-btn')
+fab.addEventListener('click', function() {
+    viewReports();
+});
+
+function viewReports() {
+    addClass(submitScreen, 'move-up');
+    dbReportsRef.on('child_added', snap => {
+        var report = snap.val();
+        reportContainer.innerHTML += `<div class="col s4 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">${report.title}</span><p>${report.desc}</p></div>`
+    });
+}
 
 //utility functions
-
 function hasClass(el, className) {
     return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
 }
