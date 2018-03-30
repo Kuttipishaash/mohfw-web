@@ -1,3 +1,15 @@
 .main-title {
     color: #808080;
 }
+
+.full-screen {
+    
+}
+
+#login-screen {
+    display: block;
+}
+
+#view-report-screen {
+    display: none;
+}
