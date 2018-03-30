@@ -9,15 +9,38 @@ var config = {
 };
 firebase.initializeApp(config);
 
-let dbRef = firebase.database().ref().child('reports');
+let dbReportsRef = firebase.database().ref().child('reports');
+let dbUserRef = firebase.database().ref().child('users');
 
-let loginButton = document.querySelector('#btn-submit');
+//Login screen
+let loginButton = document.querySelector('#btn-login');
+let usernameField = document.querySelector('#input-username');
+let passwordField = document.querySelector('#input-password');
+
+let loggedIn = false;
+
+loginButton.addEventListener('click', function () {
+    dbUserRef.on('child_added', snap => {
+        if (usernameField.value === snap.val().name) {
+            if (passwordField.value === snap.val().password) {
+                M.toast({
+                    html: 'Logged in successfully',
+                    classes: 'rounded'
+                });
+                loggedIn = true;
+            }
+        }
+    });
+});
+
+//Report submission screen
+let submitButton = document.querySelector('#btn-submit');
 let titleField = document.querySelector('#input-title')
 let programNameField = document.querySelector('#input-program-name');
 let descField = document.querySelector('#input-desc');
 
-loginButton.addEventListener('click', function() {
-    dbRef.push().set({
+submitButton.addEventListener('click', function () {
+    dbReportsRef.push().set({
         desc: descField.value,
         progName: programNameField.value,
         title: titleField.value
