@@ -9,6 +9,9 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//back button
+let backButton = document.querySelector('#btn-back');
+
 //db refs
 let dbReportsRef = firebase.database().ref().child('reports');
 let dbUserRef = firebase.database().ref().child('users');
@@ -43,6 +46,11 @@ loginButton.addEventListener('click', function () {
     });
 });
 
+backButton.addEventListener('click', function() {
+    addClass(submitScreen, 'move-down');
+    removeClass(fab, 'hidden');
+});
+
 //Report submission screen
 let submitScreen = document.querySelector('#submit-report-screen');
 let submitButton = document.querySelector('#btn-submit');
@@ -75,6 +83,8 @@ fab.addEventListener('click', function() {
 
 function viewReports() {
     addClass(submitScreen, 'move-up');
+    removeClass(backButton, 'hidden');
+    addClass(fab, 'hidden');
     dbReportsRef.on('child_added', snap => {
         var report = snap.val();
         reportContainer.innerHTML += `<div class="col s4 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">${report.title}</span><p>${report.desc}</p></div>`
