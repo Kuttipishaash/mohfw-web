@@ -86,31 +86,40 @@ function viewReports() {
     addClass(submitScreen, 'move-up');
     removeClass(backButton, 'hidden');
     addClass(fab, 'hidden');
-    var report, id;
+    var report, length;
     dbReportsRef.on('child_added', snap => {
         report = snap.val();
         reportContainer.innerHTML += `<div class="col s4 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">${report.title}</span><div id="id${report.id}"></div><p>${report.desc}</p></div>`
 
-        id = report.id;
-
-        let progressContainer = document.querySelector(`#id${report.id}`);
-
-        dbProgramsRef.on('child_added', progSnap => {
-            program = progSnap.val();
-
-            if (id == progSnap.key) {
-                progressContainer.innerHTML += `<div class="c100 p${(program.completion_rate)*100}">
-                <span>${(program.completion_rate)*100}%</span>
-                <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-                </div>
-              </div>`;
-            }
-        });
+        length = report.id;
     });
 
+//    console.log(report.id);
+//    console.log(progressContainer);
 
+    let i = 1;
+
+    dbProgramsRef.on('child_added', progSnap => {
+
+        let progressContainer = document.querySelector(`#id${i}`);
+        program = progSnap.val();
+
+        console.log(i);
+        console.log(progSnap.key);
+
+        if (i == progSnap.key) {
+//            console.log(progressContainer);
+            progressContainer.innerHTML += `<div class="c100 p${(program.completion_rate)*100} ">
+            <span>${(program.completion_rate)*100}%</span>
+            <div class="slice">
+              <div class="bar"></div>
+              <div class="fill"></div>
+            </div>
+          </div>`;
+        }
+
+        i++;
+    });
 }
 
 //utility functions
