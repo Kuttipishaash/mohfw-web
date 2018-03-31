@@ -15,6 +15,7 @@ let backButton = document.querySelector('#btn-back');
 //db refs
 let dbReportsRef = firebase.database().ref().child('reports');
 let dbUserRef = firebase.database().ref().child('users');
+let dbProgramsRef = firebase.database().ref().child('programs');
 
 //Login screen
 let loginScreen = document.querySelector('#login-screen');
@@ -27,8 +28,8 @@ let loggedIn = false;
 let viewScreen = document.querySelector('#view-report-screen');
 let reportContainer = document.querySelector('#report-container');
 
-//usernameField.value = 'admin';
-//passwordField.value = '123';
+usernameField.value = 'admin';
+passwordField.value = '123';
 
 loginButton.addEventListener('click', function () {
     dbUserRef.on('child_added', snap => {
@@ -46,7 +47,7 @@ loginButton.addEventListener('click', function () {
     });
 });
 
-backButton.addEventListener('click', function() {
+backButton.addEventListener('click', function () {
     addClass(submitScreen, 'move-down');
     removeClass(fab, 'hidden');
 });
@@ -77,7 +78,7 @@ submitButton.addEventListener('click', function () {
 
 //fab
 let fab = document.querySelector('.fixed-action-btn')
-fab.addEventListener('click', function() {
+fab.addEventListener('click', function () {
     viewReports();
 });
 
@@ -85,15 +86,36 @@ function viewReports() {
     addClass(submitScreen, 'move-up');
     removeClass(backButton, 'hidden');
     addClass(fab, 'hidden');
+    var report, id;
     dbReportsRef.on('child_added', snap => {
-        var report = snap.val();
-        reportContainer.innerHTML += `<div class="col s4 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">${report.title}</span><p>${report.desc}</p></div>`
+        report = snap.val();
+        reportContainer.innerHTML += `<div class="col s4 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">${report.title}</span><div id="id${report.id}"></div><p>${report.desc}</p></div>`
+
+        id = report.id;
+
+        let progressContainer = document.querySelector(`#id${report.id}`);
+
+        dbProgramsRef.on('child_added', progSnap => {
+            program = progSnap.val();
+
+            if (id == progSnap.key) {
+                progressContainer.innerHTML += `<div class="c100 p${(program.completion_rate)*100}">
+                <span>${(program.completion_rate)*100}%</span>
+                <div class="slice">
+                  <div class="bar"></div>
+                  <div class="fill"></div>
+                </div>
+              </div>`;
+            }
+        });
     });
+
+
 }
 
 //utility functions
 function hasClass(el, className) {
-    return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+    return el.classList ? el.classList.contains(className) : new RegExp('\\b' + className + '\\b').test(el.className);
 }
 
 function addClass(el, className) {
@@ -103,5 +125,5 @@ function addClass(el, className) {
 
 function removeClass(el, className) {
     if (el.classList) el.classList.remove(className);
-    else el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
+    else el.className = el.className.replace(new RegExp('\\b' + className + '\\b', 'g'), '');
 }
