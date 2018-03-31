@@ -1090,11 +1090,11 @@
 .teal-text.text-accent-4 {
   color: #00bfa5 !important;
 }
-
+/*
 .green {
   background-color: #4CAF50 !important;
 }
-
+*/  
 .green-text {
   color: #4CAF50 !important;
 }
@@ -1650,11 +1650,11 @@
 .amber-text.text-accent-4 {
   color: #ffab00 !important;
 }
-
+/*
 .orange {
   background-color: #ff9800 !important;
 }
-
+*/
 .orange-text {
   color: #ff9800 !important;
 }

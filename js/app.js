@@ -108,8 +108,16 @@ function viewReports() {
         console.log(progSnap.key);
 
         if (i == progSnap.key) {
-//            console.log(progressContainer);
-            progressContainer.innerHTML += `<div class="c100 p${(program.completion_rate)*100} ">
+            progressContainer.innerHTML += `<div class="c100 ${
+                (rate => {
+                    if(rate > 0.6) 
+                        return `green`
+                    else if(rate < 0.5) 
+                        return `orange`
+                    else
+                        return ``
+                })(program.completion_rate)
+            } p${(program.completion_rate)*100}">
             <span>${(program.completion_rate)*100}%</span>
             <div class="slice">
               <div class="bar"></div>
