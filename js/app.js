@@ -49,6 +49,7 @@ loginButton.addEventListener('click', function () {
 
 backButton.addEventListener('click', function () {
     addClass(submitScreen, 'move-down');
+    addClass(viewScreen, 'hidden');
     removeClass(fab, 'hidden');
 });
 
@@ -77,8 +78,12 @@ submitButton.addEventListener('click', function () {
 });
 
 //fab
-let fab = document.querySelector('.fixed-action-btn')
-fab.addEventListener('click', function () {
+let fab = document.querySelector('.fixed-action-btn');
+var instance = M.FloatingActionButton.init(fab);
+
+let viewScreenToggle = document.querySelector('#view-screen-toggle');
+viewScreenToggle.addEventListener('click', function () {
+    removeClass(viewScreen, 'hidden');
     viewReports();
 });
 
@@ -94,8 +99,8 @@ function viewReports() {
         length = report.id;
     });
 
-//    console.log(report.id);
-//    console.log(progressContainer);
+    //    console.log(report.id);
+    //    console.log(progressContainer);
 
     let i = 1;
 
